@@ -13,11 +13,47 @@ class RegisterView extends StatelessWidget{
   final passwordMyController = TextEditingController();
   final passwordconfirmationMyController = TextEditingController();
 
+  int contador = 0;
+
 
   void onClickCancelar(){
-    Navigator.of(_context).pushNamed("/loginview");
+
+    Navigator.of(_context).pushNamed("/registerview");
   }
+
+    void showMyDialog(String mensaje) async {
+    return showDialog<void>(
+      context: _context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("mensaje"),
+                Text("mensaje"),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   void onClickAceptar() async {
+
+    contador = 0;
+
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
 
@@ -29,11 +65,23 @@ class RegisterView extends StatelessWidget{
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        showMyDialog("casa");
         print('The password provided is too weak.');
+        contador += 1;
       } else if (e.code == 'email-already-in-use') {
+        showMyDialog("contraseña");
         print('The account already exists for that email.');
+        contador += 1;
       }
-    } catch (e) {
+     if(contador == 0) {
+
+       Navigator.of(_context).pushNamed("/menuview");
+
+     }
+
+    }
+
+    catch (e) {
       print(e);
     }
   }

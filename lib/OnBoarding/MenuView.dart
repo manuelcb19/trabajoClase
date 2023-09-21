@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kyty/OnBoarding/RegisterView.dart';
 
-class LoginView extends StatelessWidget{
+class MenuView extends StatelessWidget{
 
   late BuildContext _context;
 
@@ -10,7 +10,7 @@ class LoginView extends StatelessWidget{
     Navigator.of(_context).pushNamed("/registerview");
   }
   void onClickAceptar(){
-    Navigator.of(_context).pushNamed("/menuview");
+
   }
 
   @override
@@ -33,22 +33,6 @@ class LoginView extends StatelessWidget{
         ),
       ),
 
-      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-        child: TextFormField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Escribe tu password',
-          ),
-          obscureText: true,
-        ),
-      ),
-      Row(mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-        TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
-        TextButton( onPressed: onClickRegistrar, child: Text("REGISTRO"),)
-      ],)
-
-        
     ],);
 
     AppBar appBar = AppBar(
@@ -60,7 +44,7 @@ class LoginView extends StatelessWidget{
 
     Scaffold scaf=Scaffold(body: columna,
       //backgroundColor: Colors.deepOrange,
-    appBar: appBar,);
+      appBar: appBar,);
 
     return scaf;
   }
