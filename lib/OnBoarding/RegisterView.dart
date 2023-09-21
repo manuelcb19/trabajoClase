@@ -5,6 +5,14 @@ import 'package:flutter/material.dart';
 class RegisterView extends StatelessWidget{
 
   late BuildContext _context;
+  late String contenidoLogin;
+  late String contenidoPassword;
+  late String contenidoPasswordVerificacion;
+
+  final correoMyController = TextEditingController();
+  final passwordMyController = TextEditingController();
+  final passwordconfirmationMyController = TextEditingController();
+
 
   void onClickCancelar(){
     Navigator.of(_context).pushNamed("/loginview");
@@ -12,8 +20,11 @@ class RegisterView extends StatelessWidget{
   void onClickAceptar() async {
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: "yony@yony.com",
-        password: "1234567890",
+
+        email: correoMyController.text,
+
+        password: passwordMyController.text,
+
       );
 
     } on FirebaseAuthException catch (e) {
@@ -27,6 +38,7 @@ class RegisterView extends StatelessWidget{
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -39,25 +51,33 @@ class RegisterView extends StatelessWidget{
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
         child: TextField(
+
+            controller: correoMyController,
+            decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Escribe tu correo',
+
+          ),
+        ),
+      ),
+
+
+      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+        child: TextField(
+          controller: passwordMyController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Escribe tu usuario',
+            hintText: 'Escribe tu contraseña',
+
+
           ),
         ),
       ),
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
         child: TextFormField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Escribe tu password',
-          ),
-          obscureText: true,
-        ),
-      ),
 
-      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-        child: TextFormField(
+          controller: passwordconfirmationMyController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Repite tu password',
@@ -70,10 +90,12 @@ class RegisterView extends StatelessWidget{
         children: [
           TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
           TextButton( onPressed: onClickCancelar, child: Text("Cancelar"),)
+
         ],)
 
-
     ],);
+
+
 
     AppBar appBar = AppBar(
       title: const Text('Register'),
