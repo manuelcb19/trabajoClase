@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,34 +7,33 @@ import 'package:flutter/material.dart';
 class RegisterView extends StatelessWidget{
 
   late BuildContext _context;
-  late String contenidoLogin;
-  late String contenidoPassword;
-  late String contenidoPasswordVerificacion;
+  late TextField contenidoLogin;
+  late TextFormField contenidoPassword;
+  late TextFormField contenidoPasswordVerificacion;
 
-  final correoMyController = TextEditingController();
-  final passwordMyController = TextEditingController();
-  final passwordconfirmationMyController = TextEditingController();
-
-  int contador = 0;
-
+  TextEditingController correoMyController = TextEditingController();
+  TextEditingController passwordMyController = TextEditingController();
+  TextEditingController passwordconfirmationMyController = TextEditingController();
+  SnackBar snackBar = SnackBar(content: Text("wololoooooo"),);
 
   void onClickCancelar(){
 
-    Navigator.of(_context).pushNamed("/registerview");
+    Navigator.of(_context).pushNamed("/loginview");
+
   }
 
-    void showMyDialog(String mensaje) async {
+  void showMyDialog(String mensaje) async {
     return showDialog<void>(
       context: _context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('AlertDialog Title'),
-          content: const SingleChildScrollView(
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("mensaje"),
-                Text("mensaje"),
+                Text(mensaje),
+                Text(mensaje),
               ],
             ),
           ),
@@ -52,38 +53,44 @@ class RegisterView extends StatelessWidget{
 
   void onClickAceptar() async {
 
-    contador = 0;
 
-    try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    if(passwordMyController.text == passwordconfirmationMyController.text)
+      {
+        try {
 
-        email: correoMyController.text,
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: correoMyController.text,
+            password: passwordMyController.text,
 
-        password: passwordMyController.text,
+          );
 
-      );
+        }
 
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        showMyDialog("casa");
-        print('The password provided is too weak.');
-        contador += 1;
-      } else if (e.code == 'email-already-in-use') {
-        showMyDialog("contraseña");
-        print('The account already exists for that email.');
-        contador += 1;
+        on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            showMyDialog("contraseña menor a 6 caracteres");
+            print('The password provided is too weak.');
+
+          } else if (e.code == 'email-already-in-use') {
+            showMyDialog("el emaul ya existe");
+            print('The account already exists for that email.');
+
+          }
+
+          Navigator.of(_context).pushNamed("/menuview");
+        }
+        catch (e) {
+          print(e);
+        }
       }
-     if(contador == 0) {
+    else
+      {
+        showMyDialog("la contraseña no son iguales");
+      }
 
-       Navigator.of(_context).pushNamed("/menuview");
 
-     }
+      //ScaffoldMessenger.of(_context).showSnackBar(snackBar);
 
-    }
-
-    catch (e) {
-      print(e);
-    }
   }
 
 
