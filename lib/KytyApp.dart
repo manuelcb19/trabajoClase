@@ -1,11 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:kyty/Splash/SplashView.dart';
 
 import 'OnBoarding/LoginView.dart';
 import 'OnBoarding/MenuView.dart';
 import 'OnBoarding/RegisterView.dart';
-import 'Splash/SplashView.dart';
 
 class KytyApp extends StatelessWidget{
 
