@@ -4,17 +4,13 @@ import 'package:flutter/material.dart';
 import 'KytyApp.dart';
 import 'firebase_options.dart';
 
-void main() {
+void main() async{
 
-
-  initFB();
-  KytyApp kytyApp = KytyApp();
-  runApp( kytyApp);
-}
-
-void initFB() async{
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  KytyApp kytyApp = KytyApp();
+  runApp(kytyApp);
 }
 

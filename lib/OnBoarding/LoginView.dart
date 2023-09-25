@@ -63,8 +63,6 @@ class LoginView extends StatelessWidget{
         print('The account already exists for that email.');
       }
     }
-
-
   }
 
   @override
@@ -120,5 +118,4 @@ class LoginView extends StatelessWidget{
 
     return scaf;
   }
-
 }
