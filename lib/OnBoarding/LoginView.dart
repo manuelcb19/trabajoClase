@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kyty/OnBoarding/RegisterView.dart';
 
+import '../Accesorios/CampoText.dart';
+
 class LoginView extends StatelessWidget{
 
   late BuildContext _context;
@@ -96,6 +98,9 @@ class LoginView extends StatelessWidget{
           obscureText: true,
         ),
       ),
+
+      kityCampoText(sHint: "kjiasdkjdaskjadskj"),
+
       Row(mainAxisAlignment: MainAxisAlignment.center,
         children: [
         TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),

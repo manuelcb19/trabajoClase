@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
 
-class CampoText extends StatelessWidget{
+class kityCampoText extends StatelessWidget{
 
-  late TextEditingController myController;
+  String sHint;
+
+  TextEditingController tecUsername = TextEditingController();
+
+  kityCampoText({Key? key, required this.sHint, required this.tecUsername}) : super (key: key);
 
   @override
   Widget build(BuildContext context) {
 
     // TODO: implement build
-    throw UnimplementedError();
+    Row row = Row(
+      children: [
+      Image.asset("resources/imagenSplash.png", width: 30, height: 30),
+        Flexible(child: TextFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: sHint
+          ),
+
+        )
+        )
+      ],
+    );
+    return row;
   }
 }
